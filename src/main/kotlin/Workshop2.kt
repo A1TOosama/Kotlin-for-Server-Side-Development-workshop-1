@@ -2,6 +2,17 @@ package org.example
 
 // 1. กำหนด data class สำหรับเก็บข้อมูลสินค้า
 data class Product(val name: String, val price: Double, val category: String)
+fun calculateTotalElectronicsPriceOver500 (product: List<Product>): Double {
+    return product
+        .filter { it.category == "Electronics" && it.price > 500 }
+        .sumOf { it.price }
+}
+
+fun countElectronicsOver500(products: List<Product>): Int {
+    return products.count { it.category == "Electronics" && it.price > 500 }
+}
+
+
 
 fun main() {
     // 2. สร้างรายการสินค้าตัวอย่าง (List<Product>)
@@ -74,15 +85,19 @@ fun main() {
 //    println("กลุ่มของสินค้าราคา 10,000 ขึ้นไป")
 //    val totalPriceOver10K = products.filter { it.price > 10000 }.forEach { println("\t - ${it.name} : ${it.price}") }
 //    println("--------------------------------------------------")
-    products.groupBy {
-        when {
-            it.price <= 1000 -> "ไม่เกิน 1,000 บาท"
-            it.price <= 9999 -> "1,000 - 9,999 บาท"
-            else -> "10,000 ขึ้นไป"
-        }
-    }.forEach { (prc, list) ->
-        println("กลุ่ม $prc")
-        list.forEach { println(" - ${it.name} (${it.price})") }
-    }
+
+    println("ราคารวมกลุ่มของสินค้า Electronics ที่ราคาเกิน 500 : ${calculateTotalElectronicsPriceOver500(products)} บาท")
+    println("จำนวนกลุ่มของสินค้า Electronics ที่ราคาเกิน 500 : ${countElectronicsOver500(products)} ชิ้น")
+
+//    products.groupBy {
+//        when {
+//            it.price <= 1000 -> "ไม่เกิน 1,000 บาท"
+//            it.price <= 9999 -> "1,000 - 9,999 บาท"
+//            else -> "10,000 ขึ้นไป"
+//        }
+//    }.forEach { (prc, list) ->
+//        println("กลุ่ม $prc")
+//        list.forEach { println(" - ${it.name} (${it.price})") }
+//    }
     println("--------------------------------------------------")
 }
